@@ -54,48 +54,8 @@
     </style>
 
     <script>
-        
-// Copyright 2012 Shaun Williams
-//
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License Version 3 as 
-//  published by the Free Software Foundation.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-
-// ==========================================================================
-// PAC-MAN
-// an accurate remake of the original arcade game
-
-// Based on original works by Namco, GCC, and Midway.
-// Research by Jamey Pittman and Bart Grantham
-// Developed by Shaun Williams
-
-// ==========================================================================
 
 (function(){
-
-//@line 1 "src/inherit.js"
-//  Apparently, the mutable, non-standard __proto__ property creates a lot of complexity for JS optimizers,
-//   so it may be phased out in future JS versions.  It's not even supported in Internet Explorer.
-//
-//  Object.create does everything that I would use a mutable __proto__ for, but this isn't implemented everywhere yet.
-// 
-//  So instead of the following:
-//
-//      var obj = {
-//          __proto__: parentObj,
-//          hello: function() { return "world"; },
-//      };
-//
-//  You can use this:
-//
-//      var obj = newChildObject(parentObj, {
-//          hello: function() { return "world"; },
-//      };
 
 var newChildObject = function(parentObj, newObj) {
 
@@ -223,8 +183,6 @@ function preloadAudio() {
         }
     }
 }
-//@line 1 "src/random.js"
-
 var getRandomColor = function() {
     return '#'+('00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
 };
@@ -232,11 +190,6 @@ var getRandomColor = function() {
 var getRandomInt = function(min,max) {
     return Math.floor(Math.random() * (max-min+1)) + min;
 };
-
-//@line 1 "src/game.js"
-//////////////////////////////////////////////////////////////////////////////////////
-// Game
-
 // game modes
 var GAME_PACMAN = 0;
 var GAME_MSPACMAN = 1;
@@ -307,11 +260,8 @@ var clearCheats, backupCheats, restoreCheats;
     };
 })();
 
-// current level, lives, and score
 var level = 1;
 var extraLives = 0;
-
-// VCR functions
 
 var savedLevel = {};
 var savedExtraLives = {};
@@ -336,9 +286,6 @@ var loadGame = function(t) {
     setScore(savedScore[t]);
     state = savedState[t];
 };
-
-/// SCORING
-// (manages scores and high scores for each game type)
 
 var scores = [
     0,0, // pacman
@@ -415,16 +362,7 @@ var saveHighScores = function() {
         localStorage.highScores = JSON.stringify(highScores);
     }
 };
-//@line 1 "src/direction.js"
-//////////////////////////////////////////////////////////////////////////////////////
-// Directions
-// (variables and utility functions for representing actor heading direction)
 
-// direction enums (in counter-clockwise order)
-// NOTE: changing the order of these enums may effect the enums.
-//       I've tried abstracting away the uses by creating functions to rotate them.
-// NOTE: This order determines tie-breakers in the shortest distance turn logic.
-//       (i.e. higher priority turns have lower enum values)
 var DIR_UP = 0;
 var DIR_LEFT = 1;
 var DIR_DOWN = 2;
